@@ -14,20 +14,25 @@ penjemput = [
     {"nama": "Rara", "status": "available"},
 ]
 
+# Buat lock untuk melindungi akses ke variabel penjemput
+penjemput_lock = threading.Lock()
+
 # Fungsi untuk mengganti status penjemput dan kembali ke "available" setelah waktu tertentu
 def update_status(penjemput1, penjemput2, queue):
     time_to_pickup = random.randint(15, 60)  # Waktu random antara 15-60 detik
     queue.put(time_to_pickup)  # Simpan waktu penjemputan di queue
     time.sleep(time_to_pickup)
-    penjemput1["status"] = "available"
-    penjemput2["status"] = "available"
+    with penjemput_lock:
+        penjemput1["status"] = "available"
+        penjemput2["status"] = "available"
 
 # Fungsi untuk mencetak status semua penjemput
 def print_status():
     while True:
-        print("Status Penjemput:")
-        for p in penjemput:
-            print(f"{p['nama']}: {p['status']}")
+        with penjemput_lock:
+            print("Status Penjemput:")
+            for p in penjemput:
+                print(f"{p['nama']}: {p['status']}")
         print("--------------------------")
         time.sleep(10)  # Cetak status setiap 10 detik
 
@@ -44,15 +49,16 @@ class CovidReportService(rpyc.Service):
             if not valid_nik:
                 return " NIK tidak valid\n"
 
-            # Cari dua penjemput yang available
-            available_penjemput = [p for p in penjemput if p["status"] == "available"]
-            if len(available_penjemput) < 2:
-                return " Tidak ada penjemput yang tersedia saat ini.\n"
+            with penjemput_lock:
+                # Cari dua penjemput yang available
+                available_penjemput = [p for p in penjemput if p["status"] == "available"]
+                if len(available_penjemput) < 2:
+                    return " Tidak ada penjemput yang tersedia saat ini.\n"
 
-            # Ambil dua penjemput
-            penjemput1, penjemput2 = available_penjemput[:2]
-            penjemput1["status"] = "picking up"
-            penjemput2["status"] = "picking up"
+                # Ambil dua penjemput
+                penjemput1, penjemput2 = available_penjemput[:2]
+                penjemput1["status"] = "picking up"
+                penjemput2["status"] = "picking up"
 
             # Queue untuk menerima waktu penjemputan dari thread
             queue = Queue()
