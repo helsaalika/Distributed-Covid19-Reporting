@@ -15,12 +15,24 @@ Sistem ini menggunakan arsitektur client-server, di mana server bertanggung jawa
 
 ## Cara Menjalankan 
 
-1. Untuk Menjalankan server, masukkan perintah berikut:
+1. Clone repository project ini:
+   ```
+   git clone https://github.com/helsaalika/Distributed-Covid19-Reporting.git
+   cd Distributed-Covid19-Reporting
+
+   ```
+2. Atur IP server pada file client.py agar sesuai dengan alamat IP server yang digunakan.
+   ```
+   # ubah 'localhost' menjadi alamat IP server
+   conn = rpyc.connect('localhost', 12345)
+   ```
+3. Jika menggunakan lebih dari satu perangkat, pastikan kedua perangkat terhubung ke jaringan yang sama.
+4. Untuk Menjalankan server, masukkan perintah berikut:
    ```
    py server.py
    ```
    
-2. Untuk menjalankan client, masukkan perintah berikut:
+5. Untuk menjalankan client, masukkan perintah berikut:
    ```
    py client.py
    ```
