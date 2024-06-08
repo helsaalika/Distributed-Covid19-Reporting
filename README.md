@@ -40,6 +40,7 @@ Sistem ini menggunakan arsitektur client-server, di mana server bertanggung jawa
 ## Dokumentasi
 
 - **Link Video Demo**: [Video TUBES SISTER Kelompok 4](https://drive.google.com/file/d/1nXh5z0QsBOexMOLnwMMDoKE84IWZMRrq/view?usp=sharing)
+- **Link Laporan Dokumentasi**: [Dokumentasi TUBES SISTER Kelompok 4](https://docs.google.com/document/d/1X0kn9EaDO_k60oSzAAEQlg1xUQzoLEA0T5DzFV2Kyi0/edit?usp=sharing)
 
 Program ini dibuat sebagai tugas besar Mata Kuliah Sistem Terdistribusi. 
 
